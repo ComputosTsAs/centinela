@@ -48,24 +48,23 @@
                     <li class="{{ Request::is('admin/products') ? 'active' : '' }}"><a href="{{ route('products.index') }}"><i class="fa fa-angle-double-right"></i> Listado de productos</a></li>
                 </ul>
             </li>
-            {{-- Ingresos --}}
-            <li class="treeview {{ Request::segment(2) === 'inputproducts' ? 'active' : null }}">
+            <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
                 <a href="#">
-                    <i class="fa fa-level-down"></i> <span>Ingresos</span>
+                    <i class="glyphicon glyphicon-phone"></i> <span>Equipos</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('equipos.index') }}"><i class="fa fa-angle-double-right"></i>Acceso</a></li>
+                </ul>
+            </li>
+            <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
+                <a href="#">
+                    <i class="glyphicon glyphicon-user"></i> <span>Operador</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('inputproducts.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo ingreso</a></li>
                     <li class="{{ Request::is('admin/inputproducts') ? 'active' : '' }}"><a href="{{ route('inputproducts.index') }}"><i class="fa fa-angle-double-right"></i> Listado de ingresos</a></li>
-                </ul>
-            </li>
-            {{-- Egresos --}}
-            <li class="treeview {{ Request::segment(2) === 'outputproducts' ? 'active' : null }}">
-                <a href="#">
-                    <i class="fa fa-level-up"></i> <span>Egresos</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
                     <li class="{{ Request::is('admin/outputproducts/create') ? 'active' : '' }}"><a href="{{ route('outputproducts.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo egreso</a></li>
                     <li class="{{ Request::is('admin/outputproducts') ? 'active' : '' }}"><a href="{{ route('outputproducts.index') }}"><i class="fa fa-angle-double-right"></i> Listado de Egresos</a></li>
                     <li class="{{ Request::is('admin/outputproducts') ? 'active' : '' }}"><a href="{{ route('outputproducts.totaloutputs') }}"><i class="fa fa-angle-double-right"></i> Total Egresos</a></li>
@@ -115,17 +114,7 @@
                     <li class="{{ Request::is('admin/mails') ? 'active' : '' }}"><a href="{{ route('mails.index') }}"><i class="fa fa-angle-double-right"></i> Listado de correos</a></li>
                 </ul>
             </li>
-            {{-- Viaticos --}}
-            <li class="treeview {{ Request::segment(2) === 'viatics' ? 'active' : null }}">
-                <a href="#">
-                    <i class="fa fa-car"></i> <span>Viáticos</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/viatics/create') ? 'active' : '' }}"><a href="{{ route('viatics.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo viático</a></li>
-                    <li class="{{ Request::is('admin/viatics') ? 'active' : '' }}"><a href="{{ route('viatics.index') }}"><i class="fa fa-angle-double-right"></i> Listado de viáticos</a></li>
-                </ul>
-            </li>
+
             {{-- Tareas --}}
             <li class="treeview {{ Request::segment(2) === 'workassignments' ? 'active' : null }}">
                 <a href="#">
@@ -144,7 +133,7 @@
             {{--Llamados--}}
             <li class="treeview {{ Request::segment(2) === 'calls' ? 'active' : null }}">
                 <a href="#">
-                    <i class="fa fa-tasks"></i> <span>Llamados</span>
+                    <i class="fa fa-phone"></i> <span>Llamados</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">

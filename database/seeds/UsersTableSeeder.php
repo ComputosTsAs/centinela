@@ -14,8 +14,8 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name'          => 'Martín',
-            'lastname'      => 'Carioni',
-            'email'         => 'mcarioni@tresarroyos.gov.ar',
+            'lastname'      => 'lageyre',
+            'email'         => 'martinl@tresarroyos.gov.ar',
             'password'      => bcrypt('123456789'),
             'type'          => 'Admin',
             'phone'         => '(2983) 439-255',

@@ -190,7 +190,7 @@ class MachinesController extends Controller
 
         // Notificación para Slack //
         $msj = '*Modificó* la máquina *'.$machine->name.'* asociada a: *'.$machine->user->name.' '.$machine->user->lastname.'*';
-        $this->slackNotification($msj);
+
         
         // Redirecciono a la vista correspondiente
         return redirect()->route('machines.index');

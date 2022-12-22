@@ -39,7 +39,6 @@ class EventsController extends Controller
         $machine_statusrepair   = StatusRepair::find($event->statusrepair_id);
         // Notificación para Slack //
         $msj = '*Registró* un nuevo evento para la máquina *'.$machine_event->name.'* asociada a: *'.$machine_user->name.' '.$machine_user->lastname.'* de *'.$machine_user->area->name. '* y su estado es: *'.$machine_statusrepair->name.'*';
-        $this->slackNotification($msj);
 
         // Muestro msj correspondiente
         flash('El evento se registró de forma exitosa!')->success();
@@ -90,7 +89,6 @@ class EventsController extends Controller
         $machine_statusrepair   = StatusRepair::find($event->statusrepair_id);
         // Notificación para Slack //
         $msj = '*Modificó* un nuevo evento para la máquina *'.$machine_event->name.'* asociada a: *'.$machine_user->name.' '.$machine_user->lastname.'* y su estado es: *'.$machine_statusrepair->name.'*';
-        $this->slackNotification($msj);
 
         // Muestro msj correspondiente
         flash('El evento ha sido modificado de forma exitosa!')->success();
@@ -118,7 +116,6 @@ class EventsController extends Controller
 
         // Notificación para Slack //
         $msj = '*Eliminó* un nuevo evento para la máquina *'.$machine_event->name.'* asociada a: *'.$machine_user->name.' '.$machine_user->lastname.'* de *'.$machine_user->area->name. '*';
-        $this->slackNotification($msj);
 
         // Muestro el msj correspondiente
         flash('El evento ha sido eliminado de forma exitosa!')->success();
@@ -127,25 +124,5 @@ class EventsController extends Controller
         return redirect()->route('machines.show', $event->machine_id)->with("deleted" , $id );
     }
 
-    /*
-    *   Metodo que realiza el envió de la notificación de Slack
-    */
-    public function slackNotification($msj) {
-        
-        $settings = [
-            'username'   => \Auth::user()->name .' '. \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
-            'link_names' => true    //Activar que el nombre de usuario sea un link
-        ];
-        // Instanciar la clase
-        $client = new \Maknz\Slack\Client(config('slack.endpoint'), $settings);
-        // Utilizar el método to es para elegir el canal donde se enviará el mensaje
-        // El método send para indicar el texto
-        $client->to(ENV('SLACK-CHANNEL'))->attach([
-            'text'        => $msj,
-            'author_name' => \Auth::user()->name .' '. \Auth::user()->lastname,
-            'color' => 'good',
-            'mrkdwn_in' => ['text']
-        ])->send('Nueva notificación de Centinela');
 
-    }
 }

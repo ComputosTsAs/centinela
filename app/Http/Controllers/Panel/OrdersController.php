@@ -37,7 +37,7 @@ class OrdersController extends Controller
     public function create(Request $request)
     {
         // Me traigo todos los productos y los págino
-        $products = Product::search($request->name)->orderBy('name', 'ASC')->paginate(12);
+        $products = Product::search($request->name)->orderBy('name', 'ASC')->get();
         // Retorno la vista correspondiente
         return view('panel.orders.create', compact('products'));
     }
@@ -52,8 +52,7 @@ class OrdersController extends Controller
     {
         // Busco el producto solicitado por el request
         $product = Product::find($request->product_id);
-        if ( ($product->stock - $request->quantity) >= 0 ) 
-        {
+        if (($product->stock - $request->quantity) >= 0) {
             // Creo una nueva instacia de outputproduct con los datos del request
             $outputproduct = new OutputProduct($request->all());
             $outputproduct->output_date = date('Y-m-d G:i:s');
@@ -68,21 +67,17 @@ class OrdersController extends Controller
             $product->save();
 
             // Notificación para Slack //
-            $msj = '*Realizó* un nuevo pedido de producto *'.$product->name.'* solicitando: *'. $outputproduct->quantity .' unidad/es* su stock se actualizó a: *'.$product->stock.'*. El área a la que pertenece *'. \Auth::user()->name .'* es *'. $outputproduct->user->area->name.'*';
+            $msj = '*Realizó* un nuevo pedido de producto *' . $product->name . '* solicitando: *' . $outputproduct->quantity . ' unidad/es* su stock se actualizó a: *' . $product->stock . '*. El área a la que pertenece *' . \Auth::user()->name . '* es *' . $outputproduct->user->area->name . '*';
             $this->slackNotification($msj);
 
             // Muestro msj correspondiente
-            flash('El producto "' .$product->name. '" a sido reservado ¡correctamente!. El mismo quedará reservado por 5 días aprox. hasta que "'.\Auth::user()->name. '" pase a retirarlo por el Centro de Cómputos o hasta agotar stock.')->success();
-
-        }
-        else 
-        {
-            flash('El producto "' .$product->name. '" no posee el stock solicitado. Su stock actual es de "'.$product->stock.'".')->error();
+            flash('El producto "' . $product->name . '" a sido reservado ¡correctamente!. El mismo quedará reservado por 5 días aprox. hasta que "' . \Auth::user()->name . '" pase a retirarlo por el Centro de Cómputos o hasta agotar stock.')->success();
+        } else {
+            flash('El producto "' . $product->name . '" no posee el stock solicitado. Su stock actual es de "' . $product->stock . '".')->error();
         }
 
         // Redirecciono a la vista correspondiente
         return redirect()->route('orders.create');
-
     }
 
     /**
@@ -96,16 +91,13 @@ class OrdersController extends Controller
         // Busco el order
         $order = OutputProduct::findOrFail($id);
 
-        if ( $order->user_id == \Auth::user()->id)
-        {
+        if ($order->user_id == \Auth::user()->id) {
             // Retorno la vista
             return view('panel.orders.show', compact('order'));
-        }
-        else {
+        } else {
             // Retorno la vista
             return view('errors.401');
         }
-        
     }
 
     /**
@@ -131,12 +123,10 @@ class OrdersController extends Controller
         // Busco la salida
         $outputproduct = OutputProduct::find($id);
         // Si son distintos productos
-        if ( $request->product_id != $outputproduct->product_id )
-        {
+        if ($request->product_id != $outputproduct->product_id) {
             // Busco el producto
             $product = Product::find($request->product_id);
-            if ($product->stock >= $request->quantity)
-            {
+            if ($product->stock >= $request->quantity) {
                 // Posee stock
                 $product->stock = $product->stock - $request->quantity;
                 $product->save();
@@ -154,41 +144,34 @@ class OrdersController extends Controller
                 $outputproduct->save();
 
                 // Notificación para Slack //
-                $msj = '*Modificó* el pedido de *'.$product_old->name. '* solicitado anteriormente y su stock actual es de *'.$product_old->stock.'* y lo cambia por *'.$product->name.'* actualizando su stock a *'.$product->stock.'* de la fecha *'.date('d-m-Y h:i', strtotime($outputproduct->output_date)).'*';
+                $msj = '*Modificó* el pedido de *' . $product_old->name . '* solicitado anteriormente y su stock actual es de *' . $product_old->stock . '* y lo cambia por *' . $product->name . '* actualizando su stock a *' . $product->stock . '* de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
                 $this->slackNotification($msj);
 
                 // Muestro msj correspondiente
-                flash('El egreso de la fecha "' .date('d-m-Y h:i', strtotime($outputproduct->output_date)). '" se registró de forma ¡exitosa!. El producto "' .$product->name. '" actualizó su stock a '.$product->stock)->success();
+                flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!. El producto "' . $product->name . '" actualizó su stock a ' . $product->stock)->success();
+            } else {
+                flash('El producto "' . $product->name . '" no posee el stock necesario para realizar la operación')->error();
             }
-            else
-            {
-                flash('El producto "' .$product->name. '" no posee el stock necesario para realizar la operación')->error();
-            }
-        } else 
-        {
+        } else {
             // Si es el mismo producto a modificar
             // Busco el producto
             $product = Product::find($request->product_id);
             // Si las cantidades son las mismas solo actualizo los datos
-            if ( $outputproduct->quantity == $request->quantity )
-            {
+            if ($outputproduct->quantity == $request->quantity) {
                 $outputproduct->fill($request->all());
                 // Estado del producto entregado
                 $outputproduct->save();
 
                 // Notificación para Slack //
-                $msj = '*Modificó* los datos del pedido de la fecha *'.date('d-m-Y h:i', strtotime($outputproduct->output_date)).'*';
+                $msj = '*Modificó* los datos del pedido de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
                 $this->slackNotification($msj);
 
                 // Muestro msj correspondiente
-                flash('El egreso de la fecha "' .date('d-m-Y h:i', strtotime($outputproduct->output_date)). '" se registró de forma ¡exitosa!')->success();
-            }
-            else 
-            {
+                flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!')->success();
+            } else {
                 // Entra acá si pide más stock del mismo producto solicitado
                 // Si devolviendo stock, todavia poseo stock
-                if ($product->stock + $outputproduct->quantity >= $request->quantity)
-                {
+                if ($product->stock + $outputproduct->quantity >= $request->quantity) {
                     // Devuelvo stock
                     $product->stock = $product->stock + $outputproduct->quantity;
                     $product->save();
@@ -203,18 +186,15 @@ class OrdersController extends Controller
                     $outputproduct->save();
 
                     // Notificación para Slack //
-                    $msj = '*Modificó* el pedido del producto *'.$product->name.'* solicitando *'. $outputproduct->quantity .'* unidad/es y actualizando su stock a *'.$product->stock.'* de la fecha *'.date('d-m-Y h:i', strtotime($outputproduct->output_date)).'*';
+                    $msj = '*Modificó* el pedido del producto *' . $product->name . '* solicitando *' . $outputproduct->quantity . '* unidad/es y actualizando su stock a *' . $product->stock . '* de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
                     $this->slackNotification($msj);
 
                     // Muestro msj correspondiente
-                    flash('El egreso de la fecha "' .date('d-m-Y h:i', strtotime($outputproduct->output_date)). '" se registró de forma ¡exitosa!. El producto "' .$product->name. '" actualizó su stock a '.$product->stock)->success();
-                } 
-                else 
-                {
-                    flash('El producto "' .$product->name. '" no posee el stock necesario para realizar la operación')->error();
+                    flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!. El producto "' . $product->name . '" actualizó su stock a ' . $product->stock)->success();
+                } else {
+                    flash('El producto "' . $product->name . '" no posee el stock necesario para realizar la operación')->error();
                 }
             }
-            
         }
 
         // Redirecciono a la vista correspondiente
@@ -242,23 +222,35 @@ class OrdersController extends Controller
         $order->delete();
 
         // Notificación para Slack //
-        $msj = '*Eliminó* el pedido de la fecha *'.date('d-m-Y h:i', strtotime($order->output_date)).'* devuelve stock del producto *'.$product->name. '* solicitado anteriormente y su stock actual es de *'.$product->stock.'*';
+        $msj = '*Eliminó* el pedido de la fecha *' . date('d-m-Y h:i', strtotime($order->output_date)) . '* devuelve stock del producto *' . $product->name . '* solicitado anteriormente y su stock actual es de *' . $product->stock . '*';
         $this->slackNotification($msj);
-        
+
         // Muestro msj correspondiente
-        flash('El egreso de la fecha "' .date('d-m-Y h:i', strtotime($order->output_date)). '" fue eliminado de forma ¡exitosa!.')->success();
+        flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($order->output_date)) . '" fue eliminado de forma ¡exitosa!.')->success();
 
         // Redirecciono a la vista correspondiente
         return redirect()->route('orders.index');
     }
 
+    public function apiGet($nombre)
+    {
+        if($nombre != 'all'){
+        
+            $products = Product::search($nombre)->orderBy('name', 'ASC')->get();
+        }else{
+            $products = Product::all();
+        }
+        return view('panel.orders.products', compact('products'));
+    }
+
     /*
     *   Metodo que realiza el envió de la notificación de Slack
     */
-    public function slackNotification($msj) {
-        
+    public function slackNotification($msj)
+    {
+
         $settings = [
-            'username'   => \Auth::user()->name .' '. \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
+            'username'   => \Auth::user()->name . ' ' . \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
             'link_names' => true    //Activar que el nombre de usuario sea un link
         ];
         // Instanciar la clase
@@ -267,11 +259,9 @@ class OrdersController extends Controller
         // El método send para indicar el texto
         $client->to(ENV('SLACK-CHANNEL'))->attach([
             'text'        => $msj,
-            'author_name' => \Auth::user()->name .' '. \Auth::user()->lastname,
+            'author_name' => \Auth::user()->name . ' ' . \Auth::user()->lastname,
             'color' => 'good',
             'mrkdwn_in' => ['text']
         ])->send('Nueva notificación de Centinela');
-
     }
-
 }

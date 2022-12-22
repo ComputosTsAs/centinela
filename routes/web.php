@@ -32,6 +32,8 @@ Route::get(
     '\App\Http\Controllers\Auth\RegisterController@redirectLogin'
 )->name('register');
 
+Route::get('orders/api/{name}', 'Panel\OrdersController@apiGet')->name('orders-api');
+
 /* -- Modulo Logins -- */
 /* -- Grupo de rutas para panel de administración con proteccion del middleware -- */
 
@@ -52,6 +54,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     // Rutas para modulo de orders
     Route::resource('orders', 'Panel\OrdersController');
+
+
 
     Route::group(['middleware' => 'admin'], function () {
         // Rutas para modulo de mails
@@ -116,6 +120,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             'uses' => 'Panel\ProductsController@withoutImage',
             'as' => 'products.withoutimage',
         ]);
+
+        // Ruta 1
+
+        Route::get('equipos/solicitudes', [
+            'uses' => 'Panel\EquiposController@solicitudes',
+            'as' => 'equipos.solicitudes',
+        ]);
+
+        Route::get('equipos/solicitudes/create', [
+            'uses' => 'Panel\EquiposController@create',
+            'as' => 'equipos.solicitudes.create',
+        ]);
+        Route::resource('equipos', 'Panel\EquiposController');
 
         // Ruta para modulo inputproducts
         Route::resource('inputproducts', 'Panel\InputProductsController');

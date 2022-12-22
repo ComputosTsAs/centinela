@@ -28,7 +28,7 @@ class OutputProductRequest extends FormRequest
             'product_id'    => 'required|numeric',
             'quantity'      => 'required|numeric',
             'output_date'   => 'required|date_format:Y-m-d H:i:s',
-            'description'   => 'required',
+ 
         ];
     }
 
@@ -43,7 +43,7 @@ class OutputProductRequest extends FormRequest
             'quantity.numeric'          =>  'El campo cantidad debe ser un número.',
             'output_date.required'      =>  'El campo fecha es obligatorio.',
             'output_date.date_format'   =>  'El campo fecha no corresponde con el formato de fecha Y-m-d H:i:s.',
-            'description.required'       =>  'El campo descripción es obligatorio.',
+
         ];
     }
 }
