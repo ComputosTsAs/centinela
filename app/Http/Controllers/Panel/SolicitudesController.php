@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
-use App\Models\Solicitud;
+use App\Models\Order;
 
 
-class EquiposController extends Controller
+class SolicitudesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,23 +18,15 @@ class EquiposController extends Controller
      */
     public function index()
     {
-
-        
+        $solicitudes = Order::all();
         // Retorno a la vista
-        return view('panel.equipos.index');
-    }
-
-    public function solicitudes()
-    {
-        $solicitudes = Solicitud::all();
-        // Retorno a la vista
-        return view('panel.equipos.solicitudes',compact('solicitudes'));
+        return view('panel.solicitudes.solicitudes',compact('solicitudes'));
     }
 
     public function create()
     {
         // Retorno a la vista
-        return view('panel.equipos.create');
+        return view('panel.solicitudes.create');
     }
 
 

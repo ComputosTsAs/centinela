@@ -121,18 +121,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             'as' => 'products.withoutimage',
         ]);
 
-        // Ruta 1
-
-        Route::get('equipos/solicitudes', [
-            'uses' => 'Panel\EquiposController@solicitudes',
-            'as' => 'equipos.solicitudes',
+        // Rutas solicitudes
+        /*Route::get('solicitudes', [
+            'uses' => 'Panel\SolicitudesController@index',
+            'as' => 'solicitudes',
         ]);
 
-        Route::get('equipos/solicitudes/create', [
-            'uses' => 'Panel\EquiposController@create',
-            'as' => 'equipos.solicitudes.create',
+        Route::get('solicitudes/create', [
+            'uses' => 'Panel\SolicitudesController@create',
+            'as' => 'solicitudes.create',
         ]);
-        Route::resource('equipos', 'Panel\EquiposController');
+        */
+        Route::resource('solicitudes', 'Panel\SolicitudesController');
 
         // Ruta para modulo inputproducts
         Route::resource('inputproducts', 'Panel\InputProductsController');

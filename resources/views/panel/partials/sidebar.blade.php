@@ -50,11 +50,11 @@
             </li>
             <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
                 <a href="#">
-                    <i class="glyphicon glyphicon-phone"></i> <span>Equipos</span>
+                    <i class="glyphicon glyphicon-phone"></i> <span>Solicitudes</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('equipos.index') }}"><i class="fa fa-angle-double-right"></i>Acceso</a></li>
+                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('solicitudes.index') }}"><i class="fa fa-angle-double-right"></i>listado de solicitudes</a></li>
                 </ul>
             </li>
             <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">

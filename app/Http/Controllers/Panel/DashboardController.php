@@ -54,21 +54,10 @@ class DashboardController extends Controller
 
             $pendingTasks = WorkAssignment::where('Working_state_id', 1)->where ('user_id', NULL)->orderBy('id', 'ASC')->count();
             //contador bandeja de entrada
-            $id=\Auth::user()->id;
-            $inbox = WorkAssignment::where('user_id',$id)->count();
+            $user = User::find(\Auth::user()->id);
+            $inbox = $user->workAssignments->count();
+
         
-            /* Consulta para saber cuantos productos se van gastando en corriente año 
-            $sql        = " SELECT p.name AS name_product, SUM(quantity) AS quantity
-                            FROM outputproducts o
-                            INNER JOIN products p ON o.product_id = p.id
-                            WHERE YEAR(output_date) = YEAR(CURDATE())
-                            GROUP BY product_id
-                            ORDER BY quantity DESC ";
-
-            $query = \DB::select($sql);
-            $requestedProducts = new \Illuminate\Support\Collection($query);
-            Fin Consulta para saber cuantos productos se van gastando en corriente año */
-
             // Retorno vista correspondiente
             return view('panel.dashboard', compact('mails', 'desktops', 'laptops', 'printers', 'outputproducts', 'users', 'low_stock', 'pendingTasks', 'inbox'));
         }

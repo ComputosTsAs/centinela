@@ -40,7 +40,7 @@
         <h3 class="box-title">Nuevo egreso</h3>
     </div>{{-- /.box-header --}}
     {{-- form start --}}
-    {!! Form::open(['route' => 'outputproducts.store', 'method' => 'POST']) !!}
+    {!! Form::open(['route' => 'solicitudes.store', 'method' => 'POST']) !!}
     <div class="box-body">
 
         <div class="row">

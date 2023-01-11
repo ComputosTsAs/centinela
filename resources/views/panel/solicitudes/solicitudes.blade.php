@@ -29,7 +29,7 @@
             @if (Auth::user()->isAdmin())
                 {{-- Small boxes (Stat box) --}}
                 <div class="row">
-                    <a href="{{ route('equipos.solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nuevo producto"><i class="fa fa-shopping-cart"></i> Nuevo solicitud</a><br><br>
+                    <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nuevo producto"><i class="fa fa-shopping-cart"></i> Nuevo solicitud</a><br><br>
 
                     <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
@@ -37,28 +37,29 @@
                                 <th>Fecha</th>
                                 <th>Solicitante</th>
                                 <th>Pedido</th>
-                                <th>Lugar a usar/motivo</th>
-                                <th>Fecha de entrega</th>
                                 <th>Estado</th>
+                                <th>Fecha de entrega</th>
+                                <th>Entregó</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ( $solicitudes as $solicitud )
                             <tr>
-                                <td>{!! date('d-m-Y', strtotime($solicitud->fecha_regis)) !!}</td>
-    
-                                <td>{!! $solicitud->solicitante !!}</td>
-    
-                                <td>{!! $solicitud->pedido !!}</td>
-
-                                <td>{!! $solicitud->lugar_motivo !!}</td>
-
-                                <td>@if($solicitud->fecha_entrega)
-                                    {!! date('d-m-Y', strtotime($solicitud->fecha_entrega)) !!}
+                                <td>{!! date('d-m-Y', strtotime($solicitud->admission_date)) !!}</td>
+                                <td>{!! $solicitud->user_id !!}</td>
+                                <td>{!! $solicitud->description !!}</td>
+                                <td>{!! $solicitud->status_id !!}</td>
+                                <td>@if($solicitud->delivery_date)
+                                    {!! date('d-m-Y', strtotime($solicitud->delivery_date)) !!}
                                 
                                 @endif
-                            </td>
-                                <td>{!! $solicitud->estado !!}</td>
+                                </td>
+                                <td>@if($solicitud->user_id_deliver)
+                                    {!! date('d-m-Y', strtotime($solicitud->user_id_deliver)) !!}
+                                
+                                @endif
+                                </td>
+                                
 
     
                             </tr>

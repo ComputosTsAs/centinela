@@ -155,7 +155,7 @@
                     {{ $pendingTasks }}
                 </h3>
                 <p>
-                    Tareas sin asignar
+                    Tareas Pendientes
                 </p>
             </div>
             <div class="icon">

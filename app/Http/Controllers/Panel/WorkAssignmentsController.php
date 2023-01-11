@@ -70,8 +70,13 @@ class WorkAssignmentsController extends Controller
             $workAssignment->users()->attach(null);
         }
 
+        $msj = '*Agregó* una nueva Tarea *'. $request->name.': '.$request->description;
+        $this->slackNotification($msj);
+        
         flash('La tarea se ha registrado con exito!')->success();
         return redirect()->route('workassignments.index');
+
+
     }
 
     /**
@@ -262,5 +267,23 @@ class WorkAssignmentsController extends Controller
         $task->users()->sync($authid);
 
         return redirect()->back();
+    }
+    public function slackNotification($msj)
+    {
+
+        $settings = [
+            'username'   => \Auth::user()->name . ' ' . \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
+            'link_names' => true    //Activar que el nombre de usuario sea un link
+        ];
+        // Instanciar la clase
+        $client = new \Maknz\Slack\Client(config('slack.endpoint'), $settings);
+        // Utilizar el método to es para elegir el canal donde se enviará el mensaje
+        // El método send para indicar el texto
+        $client->to(ENV('SLACK-CHANNEL'))->attach([
+            'text'        => $msj,
+            'author_name' => \Auth::user()->name . ' ' . \Auth::user()->lastname,
+            'color' => 'good',
+            'mrkdwn_in' => ['text']
+        ])->send('Nueva notificación de Centinela');
     }
 }

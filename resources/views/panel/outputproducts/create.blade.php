@@ -71,8 +71,8 @@
             {{-- Cantidad --}}
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('quantity', 'Cantidad') !!}
-                    {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;999]']) !!}
+                    {!! Form::label('quantity', 'Cantidad (Máximo 3 unidades)') !!}
+                    {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;3]']) !!}
                 </div>
             </div>
 
