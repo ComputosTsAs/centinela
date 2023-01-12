@@ -1,39 +1,30 @@
+<div class="col-md-12">
+    <div class="box box-info">
+    <div class="box-body">
+    <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
+        <thead>
+            <tr>
 
-<div class="row">
-    @foreach ( $products as $product)
-        <div class="col-sm-12">
-            <div class="col-sm-3">
-
-                <div class="thumbnail">
-
-                    @if ( $product->image != null )
-                        <img src="{{ asset('img/products/' . $product->image ) }}" alt="{{ $product->name }}">
-                    @else
-                        <img src="{{ asset('AdminLTE/img/producto-sin-foto.png') }}" alt="producto-sin-foto.png">
-                    @endif
-        
-                </div>
-            </div>
-
-            <div class="col-sm-9">
-                <h3>
-                    {!! $product->name !!}
-                </h3>
-                <p>
-                    {!! $product->description !!}
-                </p>
-
-                @if ( $product->stock != 0 )
-                    <a class="btn btn-primary btn-sm" data-target="#myModal{!! $product->id !!}" data-toggle="modal" href="#">
-                        <b>
-                            Solicitar
-                        </b>
-                    </a>
-                @else
-                    <p class="text-danger">No poseemos stock de {!! $product->name !!}</p>
-                @endif
-
-                {{-- Modal --}}
+              
+                <th>producto</th>
+                <th>descripcion</th>
+       
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ( $products as $product)
+            
+            <tr>
+                <td> <h4>  {!! $product->name !!}</h4> <small>{!! $product->description !!}</small></td>
+               <td>
+                   @if ( $product->stock != 0 )
+                   <a class="btn btn-primary btn-sm" data-target="#myModal{!! $product->id !!}" data-toggle="modal" href="#">
+                       <b>Solicitar</b></a>
+                       @else
+                       <p class="text-danger">No poseemos stock de {!! $product->name !!}</p>
+                       @endif
+               
+                       {{-- Modal --}}
                 <div class="modal fade" id="myModal{!! $product->id !!}" role="dialog">
                     <div class="modal-dialog">
                         {{-- Modal content --}}
@@ -61,7 +52,7 @@
                                 @endif
 
                                     {!! Form::open(['route' => 'orders.store', 'method' => 'POST']) !!}
-                                    <div class="modal-body">
+                                    <div class="modal-body" style="white-space: normal;">
         
                                         {{ Form::hidden('product_id', $product->id) }}
     
@@ -104,14 +95,14 @@
                         </div>
                     </div>
                 </div>
+                {{--end modal--}}
+                </td>
 
-            </div>
-        
-        </div>
+            </tr>
+        @endforeach
+        </tbody></table>
 
-        <hr>
-
-    @endforeach
-
+    </div>
+    </div>
 </div>
 

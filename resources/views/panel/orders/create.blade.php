@@ -3,14 +3,16 @@
 @section('title-head', 'Nuevo producto')
 
 @section('head')
-    
     {{-- Estilos para form-validator --}}
     @include('panel.partials.heads.form-validator-styles')
-
+    {{-- Estilos para datatables --}}
+    @include('panel.partials.heads.datatables-styles')
+    
 @endsection
 
 @section('breadcrumb')
 {{-- Content Header (Page header) --}}
+
 <section class="content-header">
     <h1>
         <i class="fa fa-shopping-cart"></i> Pedidos
@@ -25,36 +27,26 @@
 @endsection
 
 @section('main-content')
-{{-- Buscador de productos --}}
-<div class="col-sm-12">
-    
-    <div class="col-sm-8">
-    </div>
-    <div class="col-sm-4">
-        <input class="form-control" placeholder="Ingrese un producto a buscar..." type="text" id="search-box">
 
-    </div>
-
-</div>
-<br>
-{{-- Fin Buscador de productos --}}
 <div id="container-products">
     @include('panel.orders.products')
 
 </div>
 
-
-
 @endsection
 
 @section('script')
+    {{-- Scripts necesarios para datatables --}}
+    @include('panel.partials.scripts.datatables-pedProd')
 
     {{-- Scripts necesarios para form-validator --}}
     @include('panel.partials.scripts.form-validator')
 
     {{-- Scripts necesarios para CK Editor 
     @include('panel.partials.scripts.ckeditor') --}}
-    <script src="{{asset('AdminLTE/js/searcher.js')}}"></script>
+
+    {{-- Scripts necesarios para tooltip --}}
+    @include('panel.partials.scripts.tooltip')
 
 @endsection
 

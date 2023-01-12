@@ -14,6 +14,10 @@
                     {!! Form::label('name', 'Nombre') !!}
                     {!! Form::text('name', $product->name, ['class' => 'form-control', 'placeholder' => 'Ingrese nombre', 'data-validation' => 'length', 'data-validation-length' => '3-191', 'required']) !!}
                 </div>
+                <div class="form-group">
+                    {!! Form::label('private', 'privado') !!}
+                    {!! Form::checkbox('private', TRUE ,$product->private ,['class' => 'form-control']) !!}
+                </div>
 
                 {{-- Imagen --}}
                 <div class="form-group">

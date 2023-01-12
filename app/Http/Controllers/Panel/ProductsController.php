@@ -135,6 +135,12 @@ class ProductsController extends Controller
         // Actualizo los demas datos
         $product->name = $request->name;
         $product->description = $request->description;
+        if ($request->private){
+            $product->private = $request->private;
+        }else {
+            $product->private = 0;
+        }
+
         // Guardo los datos
         $product->save();
         // Muestro mensaje

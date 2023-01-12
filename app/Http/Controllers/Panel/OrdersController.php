@@ -37,7 +37,7 @@ class OrdersController extends Controller
     public function create(Request $request)
     {
         // Me traigo todos los productos y los págino
-        $products = Product::search($request->name)->orderBy('name', 'ASC')->get();
+        $products = Product::search($request->name)->where('private',0)->orderBy('name', 'ASC')->get();
         // Retorno la vista correspondiente
         return view('panel.orders.create', compact('products'));
     }
