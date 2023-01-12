@@ -69,8 +69,11 @@ class WorkAssignmentsController extends Controller
         } else {
             $workAssignment->users()->attach(null);
         }
+        $etiquetas = array("<p>", "</p>");
+        $msj=  str_replace($etiquetas," ", $request->description);
+        $msj = '_Agregó_ una nueva Tarea: *'. $request->name.'*
+        '.$msj.'';
 
-        $msj = '*Agregó* una nueva Tarea *'. $request->name.': '.$request->description;
         $this->slackNotification($msj);
         
         flash('La tarea se ha registrado con exito!')->success();
@@ -272,17 +275,17 @@ class WorkAssignmentsController extends Controller
     {
 
         $settings = [
-            'username'   => \Auth::user()->name . ' ' . \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
-            'link_names' => true    //Activar que el nombre de usuario sea un link
+            'username'   => 'Slackbot', //Nombre de usuario que envía el mensaje
+            'link_names' => false    //Activar que el nombre de usuario sea un link
         ];
         // Instanciar la clase
         $client = new \Maknz\Slack\Client(config('slack.endpoint'), $settings);
         // Utilizar el método to es para elegir el canal donde se enviará el mensaje
         // El método send para indicar el texto
-        $client->to(ENV('SLACK-CHANNEL'))->attach([
+        $client->to('centinela-tareas')->attach([
             'text'        => $msj,
             'author_name' => \Auth::user()->name . ' ' . \Auth::user()->lastname,
-            'color' => 'good',
+            'color' => 'warning',
             'mrkdwn_in' => ['text']
         ])->send('Nueva notificación de Centinela');
     }

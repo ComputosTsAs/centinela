@@ -67,8 +67,8 @@
     
                                         {{-- Cantidad --}}
                                         <div class="form-group">
-                                            {!! Form::label('quantity', 'Cantidad') !!}
-                                            {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;999]']) !!}
+                                            {!! Form::label('quantity', 'Cantidad (máximo 3 unidades)') !!}
+                                            {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;3]']) !!}
                                         </div>
                                         {{-- Description --}}
                                         <div class="form-group">

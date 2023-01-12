@@ -80,7 +80,17 @@ class User extends Authenticatable
      */
     public function workAssignments()
     {
-        return $this->belongsToMany('App\Models\WorkAssignment', 'users_work_assignments')->withPivot('user_id', 'work_assignment_id');;
+        return $this->belongsToMany('App\Models\WorkAssignment', 'users_work_assignments')->withPivot('user_id', 'work_assignment_id');
+
+    }
+
+    public function tareasPendientes($user = '')
+    {
+        return self::select('*')
+        ->leftJoin('users_work_assignments', 'users_work_assignments.user_id', '=', 'users.id')
+        ->leftJoin('work_assignments', 'work_assignments.id', '=', 'users_work_assignments.work_assignment_id')
+        ->where ('users.id',$user)->where ('work_assignments.working_state_id',1)
+        ->count();
 
     }
 }

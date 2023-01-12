@@ -19,6 +19,7 @@ class WorkAssignment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+
     public function workingState()
     {
         return $this->belongsTo('App\Models\WorkingState');
@@ -34,6 +35,4 @@ class WorkAssignment extends Model
           
         return $this->belongsToMany('App\Models\User','users_work_assignments')->withPivot('user_id', 'work_assignment_id');
     }
-
- 
 }

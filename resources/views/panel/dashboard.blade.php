@@ -161,7 +161,7 @@
             <div class="icon">
                 <i class="fa fa-tasks"></i>
             </div>
-            <a href="{{ route('workassignments.index') }}" class="small-box-footer">
+            <a href="{{ route('workassignments.sinasignar') }}" class="small-box-footer">
                 Listado <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
@@ -181,7 +181,7 @@
             <div class="icon">
                 <i class="fa fa-tasks"></i>
             </div>
-            <a href="{{ route('workassignments.index') }}" class="small-box-footer">
+            <a href="{{ route('workassignments.bentrada') }}" class="small-box-footer">
                 Listado <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>

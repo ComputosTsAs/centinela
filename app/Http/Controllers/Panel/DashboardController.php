@@ -52,12 +52,11 @@ class DashboardController extends Controller
             // Productos bajos de stock
             $low_stock = Product::where('stock', '<=', '5')->get();
 
-            $pendingTasks = WorkAssignment::where('Working_state_id', 1)->where ('user_id', NULL)->orderBy('id', 'ASC')->count();
-            //contador bandeja de entrada
+            $pendingTasks = WorkAssignment::where('Working_state_id', 1)->where ('user_id', NULL)->count();
+            //contador de pndientes de bandeja de entrada
             $user = User::find(\Auth::user()->id);
-            $inbox = $user->workAssignments->count();
-
-        
+            $inbox =$user->tareasPendientes(\Auth::user()->id);//
+            
             // Retorno vista correspondiente
             return view('panel.dashboard', compact('mails', 'desktops', 'laptops', 'printers', 'outputproducts', 'users', 'low_stock', 'pendingTasks', 'inbox'));
         }
