@@ -68,7 +68,7 @@ class OrdersController extends Controller
 
             // Notificación para Slack //
             $msj = '*Realizó* un nuevo pedido de producto *' . $product->name . '* solicitando: *' . $outputproduct->quantity . ' unidad/es* su stock se actualizó a: *' . $product->stock . '*. El área a la que pertenece *' . \Auth::user()->name . '* es *' . $outputproduct->user->area->name . '*';
-            $this->slackNotification($msj);
+            $this->slackNotification($msj,$product->stock);
 
             // Muestro msj correspondiente
             flash('El producto "' . $product->name . '" a sido reservado ¡correctamente!. El mismo quedará reservado por 5 días aprox. hasta que "' . \Auth::user()->name . '" pase a retirarlo por el Centro de Cómputos o hasta agotar stock.')->success();
@@ -145,7 +145,7 @@ class OrdersController extends Controller
 
                 // Notificación para Slack //
                 $msj = '*Modificó* el pedido de *' . $product_old->name . '* solicitado anteriormente y su stock actual es de *' . $product_old->stock . '* y lo cambia por *' . $product->name . '* actualizando su stock a *' . $product->stock . '* de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
-                $this->slackNotification($msj);
+                $this->slackNotification($msj,$product->stock);
 
                 // Muestro msj correspondiente
                 flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!. El producto "' . $product->name . '" actualizó su stock a ' . $product->stock)->success();
@@ -164,7 +164,7 @@ class OrdersController extends Controller
 
                 // Notificación para Slack //
                 $msj = '*Modificó* los datos del pedido de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
-                $this->slackNotification($msj);
+                $this->slackNotification($msj,$product->stock);
 
                 // Muestro msj correspondiente
                 flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!')->success();
@@ -187,7 +187,7 @@ class OrdersController extends Controller
 
                     // Notificación para Slack //
                     $msj = '*Modificó* el pedido del producto *' . $product->name . '* solicitando *' . $outputproduct->quantity . '* unidad/es y actualizando su stock a *' . $product->stock . '* de la fecha *' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '*';
-                    $this->slackNotification($msj);
+                    $this->slackNotification($msj,$product->stock);
 
                     // Muestro msj correspondiente
                     flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($outputproduct->output_date)) . '" se registró de forma ¡exitosa!. El producto "' . $product->name . '" actualizó su stock a ' . $product->stock)->success();
@@ -223,7 +223,7 @@ class OrdersController extends Controller
 
         // Notificación para Slack //
         $msj = '*Eliminó* el pedido de la fecha *' . date('d-m-Y h:i', strtotime($order->output_date)) . '* devuelve stock del producto *' . $product->name . '* solicitado anteriormente y su stock actual es de *' . $product->stock . '*';
-        $this->slackNotification($msj);
+        $this->slackNotification($msj,$product->stock);
 
         // Muestro msj correspondiente
         flash('El egreso de la fecha "' . date('d-m-Y h:i', strtotime($order->output_date)) . '" fue eliminado de forma ¡exitosa!.')->success();
@@ -246,9 +246,9 @@ class OrdersController extends Controller
     /*
     *   Metodo que realiza el envió de la notificación de Slack
     */
-    public function slackNotification($msj)
+    public function slackNotification($msj,$stock)
     {
-
+        if ($stock<5){$color='danger';}else{$color='good';}
         $settings = [
             'username'   => \Auth::user()->name . ' ' . \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
             'link_names' => true    //Activar que el nombre de usuario sea un link
@@ -260,7 +260,7 @@ class OrdersController extends Controller
         $client->to(ENV('SLACK-CHANNEL'))->attach([
             'text'        => $msj,
             'author_name' => \Auth::user()->name . ' ' . \Auth::user()->lastname,
-            'color' => 'good',
+            'color' => $color,
             'mrkdwn_in' => ['text']
         ])->send('Nueva notificación de Centinela');
     }

@@ -48,15 +48,7 @@
                     <li class="{{ Request::is('admin/products') ? 'active' : '' }}"><a href="{{ route('products.index') }}"><i class="fa fa-angle-double-right"></i> Listado de productos</a></li>
                 </ul>
             </li>
-            <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
-                <a href="#">
-                    <i class="glyphicon glyphicon-phone"></i> <span>Solicitudes</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('solicitudes.index') }}"><i class="fa fa-angle-double-right"></i>listado de solicitudes</a></li>
-                </ul>
-            </li>
+            {{--operador--}}
             <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
                 <a href="#">
                     <i class="glyphicon glyphicon-user"></i> <span>Operador</span>
@@ -79,6 +71,44 @@
                 <ul class="treeview-menu">
                     <li class="{{ Request::is('admin/userorders/reservedorders') ? 'active' : '' }}"><a href="{{ route('reservedorders') }}"><i class="fa fa-angle-double-right"></i> Listado pedidos reserv.</a></li>
                     <li class="{{ Request::is('admin/userorders/canceledorders') ? 'active' : '' }}"><a href="{{ route('canceledorders') }}"><i class="fa fa-angle-double-right"></i> Listado pedidos cancel.</a></li>
+                </ul>
+            </li>
+            {{-- Tareas --}}
+            <li class="treeview {{ Request::segment(2) === 'workassignments' ? 'active' : null }}">
+                <a href="#">
+                    <i class="fa fa-tasks"></i> <span>Tareas</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ Request::is('admin/workassignments/create') ? 'active' : '' }}"><a href="{!! route('workassignments.create') !!}"><i class="fa fa-angle-double-right"></i> Nueva tareas</a></li>
+                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.sinasignar') }}"><i class="fa fa-angle-double-right"></i>Tareas sin asignar</a></li>
+                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.index') }}"><i class="fa fa-angle-double-right"></i> Listado de tareas</a></li>
+                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.terminada') }}"><i class="fa fa-angle-double-right"></i>Tareas terminadas </a></li>
+                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.bentrada') }}"><i class="fa fa-angle-double-right"></i>Bandeja de entrada </a></li>
+                   
+                </ul>
+            </li>
+            {{--Llamados--}}
+            <li class="treeview {{ Request::segment(2) === 'calls' ? 'active' : null }}">
+                <a href="#">
+                    <i class="fa fa-phone"></i> <span>Llamados</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+              {{-- /.     <li class="{{ Request::is('admin/calls/create') ? 'active' : '' }}"><a href="{!! route('calls.create') !!}"><i class="fa fa-angle-double-right"></i> Nueva pedido</a></li> --}}
+                    <li class="{{ Request::is('admin/calls') ? 'active' : '' }}"><a href="{{ route('calls.index') }}"><i class="fa fa-angle-double-right"></i> Listado de llamados</a></li>
+                    <li class="{{ Request::is('admin/calls/create') ? 'active' : '' }}"><a href="{{ route('calls.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo llamado</a></li>
+                </ul>
+            </li>
+
+            {{--Solicitudes--}}
+            <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
+                <a href="#">
+                    <i class="glyphicon glyphicon-phone"></i> <span>Solicitudes</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('solicitudes.index') }}"><i class="fa fa-angle-double-right"></i>listado de solicitudes</a></li>
                 </ul>
             </li>
             {{-- Maquinas --}}
@@ -115,34 +145,7 @@
                 </ul>
             </li>
 
-            {{-- Tareas --}}
-            <li class="treeview {{ Request::segment(2) === 'workassignments' ? 'active' : null }}">
-                <a href="#">
-                    <i class="fa fa-tasks"></i> <span>Tareas</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/workassignments/create') ? 'active' : '' }}"><a href="{!! route('workassignments.create') !!}"><i class="fa fa-angle-double-right"></i> Nueva tareas</a></li>
-                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.sinasignar') }}"><i class="fa fa-angle-double-right"></i>Tareas sin asignar</a></li>
-                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.index') }}"><i class="fa fa-angle-double-right"></i> Listado de tareas</a></li>
-                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.terminada') }}"><i class="fa fa-angle-double-right"></i>Tareas terminadas </a></li>
-                    <li class="{{ Request::is('admin/workassignments') ? 'active' : '' }}"><a href="{{ route('workassignments.bentrada') }}"><i class="fa fa-angle-double-right"></i>Bandeja de entrada </a></li>
-                   
-                </ul>
-            </li>
-            {{--Llamados--}}
-            <li class="treeview {{ Request::segment(2) === 'calls' ? 'active' : null }}">
-                <a href="#">
-                    <i class="fa fa-phone"></i> <span>Llamados</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-              {{-- /.     <li class="{{ Request::is('admin/calls/create') ? 'active' : '' }}"><a href="{!! route('calls.create') !!}"><i class="fa fa-angle-double-right"></i> Nueva pedido</a></li> --}}
-                    <li class="{{ Request::is('admin/calls') ? 'active' : '' }}"><a href="{{ route('calls.index') }}"><i class="fa fa-angle-double-right"></i> Listado de llamados</a></li>
-                    <li class="{{ Request::is('admin/calls/create') ? 'active' : '' }}"><a href="{{ route('calls.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo llamado</a></li>
-                </ul>
-            </li>
-
+            
             {{-- Parametros Generales --}}
             <li class="treeview {{ Request::segment(2) === 'parameters' ? 'active' : null }}">
                 <a href="#">
