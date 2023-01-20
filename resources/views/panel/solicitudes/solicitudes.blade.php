@@ -40,6 +40,7 @@
                                 <th>Estado</th>
                                 <th>Fecha de entrega</th>
                                 <th>Entregó</th>
+                                <th>Retiró</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,11 +56,15 @@
                                 @endif
                                 </td>
                                 <td>@if($solicitud->user_id_deliver)
-                                    {!! date('d-m-Y', strtotime($solicitud->user_id_deliver)) !!}
-                                
+                                    {!! $solicitud->user_id_deliver!!}
                                 @endif
                                 </td>
-                                
+
+                                <td>
+                                @if($solicitud->who_takes)
+                                    {!!$solicitud->who_takes!!}
+                                @endif
+                                </td>
 
     
                             </tr>

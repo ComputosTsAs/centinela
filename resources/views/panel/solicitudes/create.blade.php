@@ -58,18 +58,18 @@
 
         <div class="row">
             {{-- Cantidad --}}
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('quantity', 'Cantidad') !!}
                     {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;999]']) !!}
                 </div>
-            </div>
+            </div> --}}
 
             {{-- Fecha --}}
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('output_date', 'Fecha') !!}
-                    {!! Form::text('output_date', null, ['class' => 'form-control', 'id' => 'datetimepicker1', 'readonly', 'data-validation' => 'required']) !!}
+                    {!! Form::label('admission_date', 'Fecha') !!}
+                    {!! Form::text('admission_date', null, ['class' => 'form-control', 'id' => 'datetimepicker1', 'readonly', 'data-validation' => 'required']) !!}
                 </div>
             </div>
 
@@ -85,6 +85,10 @@
             </div>
         </div>
 
+          
+        <input type="hidden" name="user_id" value="{!! Auth::user()->id !!}">
+        <input type="hidden" name="status_id" value="1">
+        {{-- <span class="hidden-xs">{!! Auth::user()->name !!}</span> --}}
     </div>
 
     <div class="box-footer">

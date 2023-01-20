@@ -21,7 +21,7 @@ class CreateOrderTable extends Migration
             $table->text('description');
             $table->datetime('delivery_date')->nullable();
             $table->unsignedInteger('user_id_deliver')->nullable();
-
+            $table->text('who_takes')->nullable();
             $table->timestamps();
 
             // Llaves foraneas

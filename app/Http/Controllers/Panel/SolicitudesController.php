@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Requests\OrderRequest;
 use App\Models\User;
 use App\Models\Order;
 
@@ -42,9 +43,22 @@ class SolicitudesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(OrderRequest $request)
+    
     {
+        // // Creo una nueva instacia de la solicitud con los datos del request
+       
+            $solicitud = new Order($request->all());
+      
+     
  
+        // // Guardo viatic
+         $solicitud->save();
+
+        // Muestro msj correspondiente
+        flash('Se ha registrado con exito!')->success();
+        // Redirecciono a la vista correspondiente
+        return redirect()->route('solicitudes.index');
     }
 
     /**
