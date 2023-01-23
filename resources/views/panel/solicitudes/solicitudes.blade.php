@@ -46,10 +46,11 @@
                         <tbody>
                             @foreach ( $solicitudes as $solicitud )
                             <tr>
-                                <td>{!! date('d-m-Y', strtotime($solicitud->admission_date)) !!}</td>
-                                <td>{!! $solicitud->user_id !!}</td>
+                                <td><a href="{{ route('solicitudes.show', $solicitud->id) }}" data-toggle="tooltip" title="Ver">{!! date('d-m-Y', strtotime($solicitud->admission_date)) !!}</a></td>
+                              
+                                <td>{!! $solicitud->user->lastname!!}, {!! $solicitud->user->name !!}</td>
                                 <td>{!! $solicitud->description !!}</td>
-                                <td>{!! $solicitud->status_id !!}</td>
+                                <td>{!! $solicitud->status->name !!}</td>
                                 <td>@if($solicitud->delivery_date)
                                     {!! date('d-m-Y', strtotime($solicitud->delivery_date)) !!}
                                 

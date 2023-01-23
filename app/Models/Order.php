@@ -21,4 +21,18 @@ class Order extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+     /**
+     * Define relationship with user model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Models\StatusOutput');
+    }
+
+
+ 
+
+
 }

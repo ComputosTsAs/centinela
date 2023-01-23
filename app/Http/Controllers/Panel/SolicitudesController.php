@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\OrderRequest;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\StatusOutput;
 
 
 class SolicitudesController extends Controller
@@ -69,7 +70,17 @@ class SolicitudesController extends Controller
      */
     public function show($id)
     {
-       
+        //busco al solicitud
+        $solicitud = Order::find($id);
+
+        //traigo datos que necesito para los select
+        $users = User::orderBy('lastname', 'ASC')->get();
+        $status = StatusOutput::orderBy('name', 'ASC')->get();
+
+        // Retorno la vista
+        return view('panel.solicitudes.show', compact('solicitud', 'status', 'users'));
+        
+
     }
 
     /**
@@ -90,9 +101,35 @@ class SolicitudesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(OrderRequest $request, $id)
     {
+    
         // Busco el mail correspondiente
+        $solicitud =  Order::find($id);
+
+        //si modifico el estado (se entrego o cancelo) guardo el usuario y fecha
+        if($request->status_id != $solicitud->status_id){
+            $solicitud->user_id_deliver   = \Auth::user()->id;
+
+            if($request->status_id  == 2){
+                $solicitud->delivery_date = date('Y-m-d G:i:s');
+            }
+           
+            $solicitud->save();
+        }
+
+        $solicitud->fill($request->all());
+        $solicitud->save();
+       
+
+        $msj = '*Modificó la solicitud "'.$solicitud->description. '" de "'. $solicitud->user->name.' '.$solicitud->user->lastname .'"con exito *';
+               
+      // Muestro msj correspondiente
+      flash('Modificó* la solicitud *'.$solicitud->description. '* de *'. $solicitud->user->name.' '.$solicitud->user->lastname .'* con exito *')->success();
+                  // Redirecciono a la vista correspondiente
+        return redirect()->route('solicitudes.index');
+
+        
        
     }
 
