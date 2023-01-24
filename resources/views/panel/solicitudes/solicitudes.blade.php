@@ -11,12 +11,12 @@
     {{-- Content Header (Page header) --}}
     <section class="content-header">
         <h1>
-            <i class="fa fa-desktop"></i> Equipos
-            <small>Solicitudes</small>
+            <i class="fa fa-desktop"></i> Solicitudes
+            <small>Listado</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Equipos</li>
+            <li class="active">Solicitudes</li>
             <li class="active">Administración</li>
         </ol>
     </section>
@@ -48,7 +48,7 @@
                             <tr>
                                 <td><a href="{{ route('solicitudes.show', $solicitud->id) }}" data-toggle="tooltip" title="Ver">{!! date('d-m-Y', strtotime($solicitud->admission_date)) !!}</a></td>
                               
-                                <td>{!! $solicitud->user->lastname!!}, {!! $solicitud->user->name !!}</td>
+                                <td>{!! $solicitud->applicant !!}</td>
                                 <td>{!! $solicitud->description !!}</td>
                                 <td>{!! $solicitud->status->name !!}</td>
                                 <td>@if($solicitud->delivery_date)
@@ -57,7 +57,8 @@
                                 @endif
                                 </td>
                                 <td>@if($solicitud->user_id_deliver)
-                                    {!! $solicitud->user_id_deliver!!}
+                                     {!! $solicitud->user_id_deliver !!} 
+                                    
                                 @endif
                                 </td>
 

@@ -11,12 +11,12 @@
     {{-- Content Header (Page header) --}}
     <section class="content-header">
         <h1>
-            <i class="fa fa-desktop"></i> Equipos
+            <i class="fa fa-desktop"></i> Solicitudes
             <small>Administración</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Equipos</li>
+            <li class="active">Solicitudes</li>
             <li class="active">Administración</li>
         </ol>
     </section>

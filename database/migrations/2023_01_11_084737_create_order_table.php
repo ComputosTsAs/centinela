@@ -17,7 +17,7 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->datetime('admission_date');
             $table->unsignedInteger('status_id');
-            $table->unsignedInteger('user_id');
+            $table->text('applicant')->nullable();
             $table->text('description');
             $table->datetime('delivery_date')->nullable();
             $table->unsignedInteger('user_id_deliver')->nullable();
@@ -25,7 +25,7 @@ class CreateOrderTable extends Migration
             $table->timestamps();
 
             // Llaves foraneas
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statusoutputs')->onDelete('cascade');
             $table->foreign('user_id_deliver')->references('id')->on('users')->onDelete('cascade');
         });

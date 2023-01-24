@@ -72,11 +72,13 @@
 
 
                 {{----}}
-                <strong><i class="fa fa-commenting-o margin-r-5"></i> Pedido</strong>
+                <strong><i class="fa fa-commenting-o margin-r-5"></i> Solicitante</strong>
 
                 <p class="text-muted">
-                    {!! $solicitud->description !!}
+                    {!! $solicitud->applicant !!}  
                 </p>
+
+            
 
                 <hr>
 
@@ -101,12 +103,11 @@
                 </p>
 
                 <hr>
-                <strong><i class="fa fa-commenting-o margin-r-5"></i> Solicitante</strong>
+                <strong><i class="fa fa-commenting-o margin-r-5"></i> Pedido</strong>
 
                 <p class="text-muted">
-                    {!! $solicitud->user->name !!}  {!! $solicitud->user->lastname !!}
+                    {!! $solicitud->description !!}
                 </p>
-
                 <hr>
                
 
@@ -191,16 +192,8 @@
                         {{-- Solicitante --}}
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('user_id', 'Solicitante') !!}
-                                <select class="form-control select-simple" id="user_id" name="user_id">
-                                    @foreach ( $users as $user )
-                                        @if ( $solicitud->user_id == $user->id)
-                                            <option value="{{ $user->id }}" selected>{{ $user->lastname }}, {{ $user->name }} ({{ $user->area->name }})</option>
-                                        @else
-                                            <option value="{{ $user->id }}">{{ $user->lastname }}, {{ $user->name }} ({{ $user->area->name }})</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                {!! Form::label('applicant', 'Solicitante') !!}
+                                {!! Form::text('applicant', $solicitud->applicant, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 

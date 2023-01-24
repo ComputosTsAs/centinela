@@ -33,7 +33,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'admission_date'    =>  'required|date_format:Y-m-d H:i:s',
-            'user_id'   =>  'required',
+            'applicant'   =>  'required',
             'description'    =>  'required',
             'status_id'      =>  'required',
             'delivery_date'      =>  'nullable|date_format:Y-m-d H:i:s',
@@ -46,10 +46,9 @@ class OrderRequest extends FormRequest
     public function messages()
     {
         return [  
-            'user_id.required'          =>  'El campo solicitante es obligatorio.',
+            'applicant.required'          =>  'El campo solicitante es obligatorio.',
             'status_id.required'          =>  'El campo estado es obligatorio.',
             'description.required'          =>  'El campo descripción es obligatorio.',
-            'user_id.required'          =>  'El campo solicitante es obligatorio.',
             'user_id_deliver.required'          =>  'El campo entregó es obligatorio.',
             'who_takes.required'          =>  'El campo retiró es obligatorio.',
             'delivery_date.date_format'   =>  'El campo fecha de entrega no corresponde con el formato de fecha Y-m-d H:i:s.',

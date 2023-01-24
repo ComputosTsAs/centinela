@@ -64,6 +64,13 @@
                     {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad', 'data-validation' => 'number', 'data-validation-allowing' => 'range[1;999]']) !!}
                 </div>
             </div> --}}
+            <div class="col-md-6">
+                <div class="form-group">
+                    {!! Form::label('applicant', 'Solicitante') !!}
+                    {!! Form::text('applicant', null, ['class' => 'form-control', 'data-validation' => 'required']) !!}
+                </div>
+            </div>
+
 
             {{-- Fecha --}}
             <div class="col-md-6">
@@ -86,7 +93,7 @@
         </div>
 
           
-        <input type="hidden" name="user_id" value="{!! Auth::user()->id !!}">
+        {{-- <input type="hidden" name="applicant" value="{!! Auth::user()->id !!}"> --}}
         <input type="hidden" name="status_id" value="1">
         {{-- <span class="hidden-xs">{!! Auth::user()->name !!}</span> --}}
     </div>

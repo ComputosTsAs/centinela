@@ -9,7 +9,7 @@ use App\Http\Requests\OrderRequest;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\StatusOutput;
-
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class SolicitudesController extends Controller
 {
@@ -48,10 +48,16 @@ class SolicitudesController extends Controller
     
     {
         // // Creo una nueva instacia de la solicitud con los datos del request
-       
-            $solicitud = new Order($request->all());
-      
-     
+ 
+        $solicitud = new Order($request->all());
+
+        $solicitud->admission_date = $request->admission_date;
+        $solicitud->status_id = $request->status_id;
+        $solicitud->description = $request->description;
+        $solicitud->applicant= $request->applicant;
+
+
+              
  
         // // Guardo viatic
          $solicitud->save();
@@ -126,7 +132,7 @@ class SolicitudesController extends Controller
         //guardo el resto de los datos
         $solicitud->status_id = $request->status_id;
         $solicitud->description = $request->description;
-        $solicitud->user_id = $request->user_id;
+        $solicitud->applicant= $request->applicant;
         
         $solicitud->save();
 
