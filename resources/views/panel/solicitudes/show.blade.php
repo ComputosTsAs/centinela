@@ -205,7 +205,7 @@
                         </div>
 
                         {{-- Estado --}}
-                        <div class="col-md-6">
+                        <div class="col-md-6" >
                             <div class="form-group">
                                 {!! Form::label( 'Estado') !!}
                                 <select class="form-control select-simple" id="status_id" name="status_id">
@@ -220,10 +220,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row " id="who_takes_row ">
-                        <div class="col-md-6"><div class="form-group"> 
+                    <div class="row " id="who_takes_row">
+                        <div class="col-md-6"><div class="form-group" > 
                             {!! Form::label("who_takes", "Retiró") !!} 
-                            {!! Form::text("who_takes", $solicitud->who_takes, ["class" => "form-control"]) !!}
+                            {!! Form::text("who_takes", $solicitud->who_takes, ["class" => "form-control", "id"=> "who_takes"]) !!}
                         </div>
                     </div>
                     </div>  
@@ -257,6 +257,7 @@
     {{-- /.col --}}
 </div>
 {{-- /.row --}}
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script	src="../../js/solicitudes.js"></script>
 @endsection
 

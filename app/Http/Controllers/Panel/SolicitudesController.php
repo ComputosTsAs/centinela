@@ -103,34 +103,42 @@ class SolicitudesController extends Controller
      */
     public function update(OrderRequest $request, $id)
     {
-    
         // Busco el mail correspondiente
         $solicitud =  Order::find($id);
-
-        //si modifico el estado (se entrego o cancelo) guardo el usuario y fecha
+      
+        //si modifico el estado actualizo los cambios
         if($request->status_id != $solicitud->status_id){
-            $solicitud->user_id_deliver   = \Auth::user()->id;
-
-            if($request->status_id  == 2){
-                $solicitud->delivery_date = date('Y-m-d G:i:s');
-            }
            
-            $solicitud->save();
+            // si entrego guardo el usuario y fecha y quien lo retiro
+            if($request->status_id  == 2){
+                $solicitud->user_id_deliver   = \Auth::user()->id;
+                $solicitud->delivery_date = date('Y-m-d G:i:s');
+                $solicitud->who_takes = $request->who_takes;
+            }else{
+                // sino los guardo en null
+                $solicitud->delivery_date = null;
+                $solicitud->user_id_deliver = null;
+                $solicitud->who_takes = null;
+            }
+          
         }
 
-        $solicitud->fill($request->all());
+        //guardo el resto de los datos
+        $solicitud->status_id = $request->status_id;
+        $solicitud->description = $request->description;
+        $solicitud->user_id = $request->user_id;
+        
         $solicitud->save();
-       
 
-        $msj = '*Modificó la solicitud "'.$solicitud->description. '" de "'. $solicitud->user->name.' '.$solicitud->user->lastname .'"con exito *';
+
+        // $msj = '*Modificó la solicitud "'.$solicitud->description. '" de "'. $solicitud->user->name. ' '.$solicitud->user->lastname .'"con exito *';
+        $msj = '*Se modificó la solicitud con exito *';
                
-      // Muestro msj correspondiente
-      flash('Modificó* la solicitud *'.$solicitud->description. '* de *'. $solicitud->user->name.' '.$solicitud->user->lastname .'* con exito *')->success();
+        // Muestro msj correspondiente
+        flash($msj)->success();
                   // Redirecciono a la vista correspondiente
         return redirect()->route('solicitudes.index');
-
-        
-       
+ 
     }
 
     /**
@@ -141,6 +149,14 @@ class SolicitudesController extends Controller
      */
     public function destroy($id)
     {
-       
+        //busco la solicitud
+        $solicitud = Order::find($id);
+        //la elimino
+        $solicitud->delete();
+
+        // $msj = "Eliminó la solicitud ".$solicitud->description;
+    
+        flash("Se eliminó la solicitud.")->success();
+        return redirect()->route('solicitudes.index'); 
     }
 }

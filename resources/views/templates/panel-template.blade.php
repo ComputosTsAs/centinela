@@ -20,6 +20,9 @@
         {{-- Icono google --}}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             
+
+        {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> --}}
+        <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
         
         {{-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries --}}
         {{-- WARNING: Respond.js doesn't work if you view the page via file:// --}}

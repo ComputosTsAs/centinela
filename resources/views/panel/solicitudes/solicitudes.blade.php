@@ -29,7 +29,7 @@
             @if (Auth::user()->isAdmin())
                 {{-- Small boxes (Stat box) --}}
                 <div class="row">
-                    <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nuevo producto"><i class="fa fa-shopping-cart"></i> Nuevo solicitud</a><br><br>
+                    <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nueva solicitud"><i class="fa fa-shopping-cart"></i> Nueva solicitud</a><br><br>
 
                     <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
