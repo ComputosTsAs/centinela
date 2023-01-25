@@ -20,7 +20,7 @@ class SolicitudesController extends Controller
      */
     public function index()
     {
-        $solicitudes = Order::all();
+        $solicitudes = Order::orderBy('status_id', 'ASC')->get();
         // Retorno a la vista
         return view('panel.solicitudes.solicitudes',compact('solicitudes'));
     }
@@ -45,7 +45,6 @@ class SolicitudesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(OrderRequest $request)
-    
     {
         // // Creo una nueva instacia de la solicitud con los datos del request
  
@@ -56,9 +55,6 @@ class SolicitudesController extends Controller
         $solicitud->description = $request->description;
         $solicitud->applicant= $request->applicant;
 
-
-              
- 
         // // Guardo viatic
          $solicitud->save();
 
@@ -85,8 +81,6 @@ class SolicitudesController extends Controller
 
         // Retorno la vista
         return view('panel.solicitudes.show', compact('solicitud', 'status', 'users'));
-        
-
     }
 
     /**
@@ -126,7 +120,6 @@ class SolicitudesController extends Controller
                 $solicitud->user_id_deliver = null;
                 $solicitud->who_takes = null;
             }
-          
         }
 
         //guardo el resto de los datos
@@ -136,7 +129,6 @@ class SolicitudesController extends Controller
         
         $solicitud->save();
 
-
         // $msj = '*Modificó la solicitud "'.$solicitud->description. '" de "'. $solicitud->user->name. ' '.$solicitud->user->lastname .'"con exito *';
         $msj = '*Se modificó la solicitud con exito *';
                
@@ -144,7 +136,6 @@ class SolicitudesController extends Controller
         flash($msj)->success();
                   // Redirecciono a la vista correspondiente
         return redirect()->route('solicitudes.index');
- 
     }
 
     /**

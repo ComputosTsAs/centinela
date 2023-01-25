@@ -4,6 +4,8 @@
 
 @section('head')
 
+ {{-- Estilos para datatables --}}
+ @include('panel.partials.heads.datatables-styles')
 
 @endsection
 
@@ -11,7 +13,7 @@
     {{-- Content Header (Page header) --}}
     <section class="content-header">
         <h1>
-            <i class="fa fa-desktop"></i> Solicitudes
+            <i class="glyphicon glyphicon-list-alt"></i> Solicitudes
             <small>Listado</small>
         </h1>
         <ol class="breadcrumb">
@@ -26,10 +28,15 @@
 
     <div class="col-md-12">
         {{-- Info box --}}
+        <div class="box box-info">
+
+            <div class="box-body">
+
+
             @if (Auth::user()->isAdmin())
                 {{-- Small boxes (Stat box) --}}
-                <div class="row">
-                    <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nueva solicitud"><i class="fa fa-shopping-cart"></i> Nueva solicitud</a><br><br>
+                {{-- <div class="row"> --}}
+                    <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Nueva solicitud"><i class="fa fa-list-alt"></i> Nueva solicitud</a><br><br>
 
                     <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
@@ -50,32 +57,56 @@
                               
                                 <td>{!! $solicitud->applicant !!}</td>
                                 <td>{!! $solicitud->description !!}</td>
-                                <td>{!! $solicitud->status->name !!}</td>
-                                <td>@if($solicitud->delivery_date)
-                                    {!! date('d-m-Y', strtotime($solicitud->delivery_date)) !!}
-                                
+
+                                @if($solicitud->status->id == 1)
+                                    <td class="text-warning">{!! $solicitud->status->name !!}</td>
+                                @elseif($solicitud->status->id == 2)
+                                    <td class="text-success">{!! $solicitud->status->name !!}</td>
+                                @else
+                                    <td class="text-danger">{!! $solicitud->status->name !!}</td>
                                 @endif
-                                </td>
-                                <td>@if($solicitud->user_id_deliver)
-                                     {!! $solicitud->user_id_deliver !!} 
-                                    
-                                @endif
-                                </td>
 
                                 <td>
-                                @if($solicitud->who_takes)
-                                    {!!$solicitud->who_takes!!}
-                                @endif
+                                    @if($solicitud->delivery_date)
+                                        {!! date('d-m-Y', strtotime($solicitud->delivery_date)) !!}
+                                    @else
+                                        -
+                                    @endif
                                 </td>
-
-    
+                                <td>
+                                    @if($solicitud->user_id_deliver)
+                                        {!! $solicitud->user->name !!} {!! $solicitud->user->lastname !!} 
+                                    @else
+                                        -
+                                    
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($solicitud->who_takes)
+                                        {!!$solicitud->who_takes!!}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Solicitante</th>
+                                <th>Pedido</th>
+                                <th>Estado</th>
+                                <th>Fecha de entrega</th>
+                                <th>Entregó</th>
+                                <th>Retiró</th>
+                            </tr>
+                        </tfoot>
                     </table>
-                    
-                </div>
+                    </div>
+                {{-- </div> --}}
             @endif
+        </div>
     </div>{{-- /.col --}}
 
 @endsection

@@ -18,7 +18,7 @@ class Order extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id_deliver');
     }
 
      /**
@@ -30,6 +30,7 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\StatusOutput');
     }
+
 
 
  

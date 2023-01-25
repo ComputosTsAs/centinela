@@ -100,17 +100,20 @@
                     <li class="{{ Request::is('admin/calls/create') ? 'active' : '' }}"><a href="{{ route('calls.create') }}"><i class="fa fa-angle-double-right"></i> Nuevo llamado</a></li>
                 </ul>
             </li>
-
             {{--Solicitudes--}}
-            <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
-                <a href="#">
-                    <i class="glyphicon glyphicon-phone"></i> <span>Solicitudes</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('solicitudes.index') }}"><i class="fa fa-angle-double-right"></i>listado de solicitudes</a></li>
-                </ul>
-            </li>
+            @if (Auth::user()->isAdmin())
+                <li class="treeview {{ Request::segment(2) === 'inputproducts' || Request::segment(2) === 'outputproducts' ? 'active' : null }}">
+                    <a href="#">
+                        {{-- <i class="glyphicon glyphicon-phone"></i> <span>Solicitudes</span> --}}
+                        <i class=" fa fa-list-alt"></i> <span>Solicitudes</span>
+                    
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ Request::is('admin/inputproducts/create') ? 'active' : '' }}"><a href="{{ route('solicitudes.index') }}"><i class="fa fa-angle-double-right"></i>listado de solicitudes</a></li>
+                    </ul>
+                </li>
+            @endif
             {{-- Maquinas --}}
             <li class="treeview {{ Request::segment(2) === 'machines' ? 'active' : null }}">
                 <a href="#">

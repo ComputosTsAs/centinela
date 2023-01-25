@@ -93,4 +93,9 @@ class User extends Authenticatable
         ->count();
 
     }
+
+    public function userDeliver()
+    {
+        return $this->hasOne('App\Models\Order', 'user_id_deliver');
+    }
 }
