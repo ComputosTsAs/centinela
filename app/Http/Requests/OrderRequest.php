@@ -29,32 +29,31 @@ class OrderRequest extends FormRequest
     //         'description'   =>  'nullable'
     //     ];
     // }
-      public function rules()
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
     {
         return [
-            'admission_date'    =>  'required|date_format:Y-m-d H:i:s',
-            'applicant'   =>  'required',
-            'description'    =>  'required',
-            'status_id'      =>  'required',
-            'delivery_date'      =>  'nullable|date_format:Y-m-d H:i:s',
-            'user_id_deliver'   =>  'nullable',
-            'who_takes'    =>  'nullable',
-           
+            'product_id'    =>  'required|numeric',
+            'quantity'      =>  'required|numeric',
+            'description'   =>  'nullable'
         ];
     }
 
     public function messages()
     {
         return [  
-            'applicant.required'          =>  'El campo solicitante es obligatorio.',
-            'status_id.required'          =>  'El campo estado es obligatorio.',
+            'product_id.required'          =>  'El campo producto es obligatorio.',
+            'quantity.required'          =>  'El campo cantidad es obligatorio.',
             'description.required'          =>  'El campo descripción es obligatorio.',
-            'user_id_deliver.required'          =>  'El campo entregó es obligatorio.',
-            'who_takes.required'          =>  'El campo retiró es obligatorio.',
-            'delivery_date.date_format'   =>  'El campo fecha de entrega no corresponde con el formato de fecha Y-m-d H:i:s.',
-            'admission_date.required'      =>  'El campo fecha es obligatorio.',
-            'admission_date.date_format'   =>  'El campo fecha no corresponde con el formato de fecha Y-m-d H:i:s.',
+            'quantity.numeric'   =>  'El campo cantidad debe ser numerico',
 
         ];
     }
 }
+
+
+   

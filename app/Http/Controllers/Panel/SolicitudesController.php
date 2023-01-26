@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Panel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
-use App\Http\Requests\OrderRequest;
+use App\Http\Requests\SolicitudRequest;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\StatusOutput;
@@ -44,7 +44,7 @@ class SolicitudesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderRequest $request)
+    public function store(SolicitudRequest $request)
     {
         // // Creo una nueva instacia de la solicitud con los datos del request
  
@@ -101,7 +101,7 @@ class SolicitudesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(OrderRequest $request, $id)
+    public function update(SolicitudRequest $request, $id)
     {
         // Busco el mail correspondiente
         $solicitud =  Order::find($id);
