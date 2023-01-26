@@ -21,19 +21,6 @@ class OrderRequest extends FormRequest
      *
      * @return array
      */
-    // public function rules()
-    // {
-    //     return [
-    //         'product_id'    =>  'required|numeric',
-    //         'quantity'      =>  'required|numeric',
-    //         'description'   =>  'nullable'
-    //     ];
-    // }
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -42,6 +29,7 @@ class OrderRequest extends FormRequest
             'description'   =>  'nullable'
         ];
     }
+ 
 
     public function messages()
     {

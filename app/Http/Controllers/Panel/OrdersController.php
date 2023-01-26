@@ -52,30 +52,36 @@ class OrdersController extends Controller
     {
         // Busco el producto solicitado por el request
         $product = Product::find($request->product_id);
+      
         if (($product->stock - $request->quantity) >= 0) {
+            
             // Creo una nueva instacia de outputproduct con los datos del request
             $outputproduct = new OutputProduct($request->all());
+           
             $outputproduct->output_date = date('Y-m-d G:i:s');
             $outputproduct->user_id = \Auth::user()->id;
             $outputproduct->statusoutput_id = 1;
             // Guardo outputproduct
             $outputproduct->save();
-
+         
             // Actualizo el stock del producto
             $product->stock = $product->stock - $outputproduct->quantity;
             // Guardo el producto
             $product->save();
-
+           
             // Notificación para Slack //
             $msj = '*Realizó* un nuevo pedido de producto *' . $product->name . '* solicitando: *' . $outputproduct->quantity . ' unidad/es* su stock se actualizó a: *' . $product->stock . '*. El área a la que pertenece *' . \Auth::user()->name . '* es *' . $outputproduct->user->area->name . '*';
+          
             $this->slackNotification($msj,$product->stock);
-
+           var_dump($msj,$product->stock);
+           die;
             // Muestro msj correspondiente
             flash('El producto "' . $product->name . '" a sido reservado ¡correctamente!. El mismo quedará reservado por 5 días aprox. hasta que "' . \Auth::user()->name . '" pase a retirarlo por el Centro de Cómputos o hasta agotar stock.')->success();
         } else {
             flash('El producto "' . $product->name . '" no posee el stock solicitado. Su stock actual es de "' . $product->stock . '".')->error();
         }
 
+       
         // Redirecciono a la vista correspondiente
         return redirect()->route('orders.create');
     }
@@ -248,13 +254,16 @@ class OrdersController extends Controller
     */
     public function slackNotification($msj,$stock)
     {
+     
         if ($stock<5){$color='danger';}else{$color='good';}
         $settings = [
             'username'   => \Auth::user()->name . ' ' . \Auth::user()->lastname, //Nombre de usuario que envía el mensaje
             'link_names' => true    //Activar que el nombre de usuario sea un link
         ];
+       
         // Instanciar la clase
         $client = new \Maknz\Slack\Client(config('slack.endpoint'), $settings);
+       
         // Utilizar el método to es para elegir el canal donde se enviará el mensaje
         // El método send para indicar el texto
         $client->to(ENV('SLACK-CHANNEL'))->attach([
